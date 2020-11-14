@@ -1,0 +1,91 @@
+Eftersom tinder för katter blev en succe och skaparen idag är miljonär tog vi inspiration av detta.
+Vi har skapat Catbook - Facebook för katter. Dessvärre hann vi inte implementera profilbilder, något vi kanske gör i framtiden.
+Vi börjar med att visa funktionalitet som är implementerad.
+
+
+Funktionalitet:
+Självklart kan man som användare registrera sig genom att trycka på sign up.
+- skapa konto - Dr.Meow
+- skapa konto - Ghinghis Cat
+
+Vi når sedan vår profilsida genom att logga in
+- logga in som Ghingis Cat
+- Gå in på sin profil
+
+Genom sökrutan kan vi hitta andra användare om vi vill skriva ett meddelande till dem.
+- Sök efter Dr.Meow
+- skriv meddelande i Dr.Meows profil
+
+Vi vill självklart kunna skicka vänförfrågningar till andra användare
+- Skicka vänförfrågan till Dr.Meows konto
+
+För att bli vän måste förfrågan accepteras. Vi gör detta genom att logga in som Dr. Meow
+Vi kan självklart ta bort förfrågan om vi inte känner personen.
+- Logga in som Dr.Meow, Deny request
+
+Svaret på vänförfrågan är självklart inte permanent. Om vi ångrar oss kan vi försöka skicka en ny vänförfrågan
+- Sök efter Ghinghis Cat
+- Lägg till vän
+- Logga ut
+
+Vi loggar in och accepterar förfrågan
+- Logga in som Dr.Meow
+- Gå till profilsida
+- Acceptera förfrågan.
+
+
+Steg för steg:
+1 Visa startsida
+2 Tryck på signup och skapa två konton, Ghinghis Cat och dr.meow
+3 Logga in på Dr.meow och visa upp dens profil som är inloggad.
+4 Skriv ett meddelande på sidan "Meeeoooow meowmeow"
+5 Sök efter ghinghis cat i sökrutan
+6 tryck på resultatet
+7 Skicka vänförfrågan
+8 logga ut och logga sedan in på ghinghis Cat
+9 gå in på profilen och TACKA NEJ till vänförfrågan
+10 Hitta dr.meow skicka ny vänförfrågan och logga ut.
+11 Logga in på Dr.Meow, tacka ja till vänförfrågan och gå sedan in på Ghinghis Cats profil
+12 Skriv ett meddelande på Ghinghis Cat sida inloggad som Dr.Meows.
+
+
+Om kod:
+
+Allmänt:
+Vi valde att använda oss av ramverket React. React hjälper oss att ladda in komponenter som innehåller HTML och CSS.
+Detta hjälper oss också att nå kravet om att "minsta möjliga del av webbplatsen ska laddas om när användaren efterfrågar ny information".
+För hemsidans design valde vi att arbeta med react-bootstrap
+Detta hjälpte oss att implementera funktionalitet på ett snabbt, smidigt sätt
+eftersom vi inte behövde lägga så mycket tid på design.
+
+Sökning:
+Vår sökruta fungerar så så att den gör asynkrona anrop till databasen efter tre tecken.
+Detta gör att vi inte behöver spara stora delar av databasen på frontend utan
+vi läser in det som behövs.
+
+Login/logout:
+För att kunna logga in och se till att man är fortsatt inloggad när man navigerar runt på
+webbplatsen så valde vi att använda oss av "Passport.js". Med hjälp av den så
+skapas en session varje gång någon lyckas logga in och vi tar sedan bort denna session när man loggat ut.
+Tack vare denna session kan vi alltid nå variablen "user" i bodyn för våra requests för att se vem som är inloggad.
+En snabb sammanfattning om hur denna process funkar är att när man skickar en "login form"
+så skickas en POST request till "passport.authenticate" som är ett middleware vi skapat.
+Detta middleware hanterar hela processen, hashar lösenordet och annat.
+Om detta går bra så sparas användaren i "req.user" vilket gör att vi endast
+behöver plocka ut innehållet i den när vi behöver skicka autentiserings requests.
+
+Vänförfrågningar:
+Vänförfrågningar ger en inblick i hur vi sparar objekt i mongodb. När en förfrågan
+skickas placeras mottagaren användarnamn i listan "pending" i avsändarens mongooseschema.
+Mottagaren får avsändarens användarnamn placerat i listan "requests". När mottagaren loggar in
+och besöker sin profilsida visas användare i dennes "request-lista". Vid bekräftning/borttagning av
+vänförfrågan tas användarnamnen bort ur dessa listor, men vid bekräftelse placeras även mottagarens
+och avsändarens användarnamn in i den andra partens "friendlist". Eftersom vänskap är för evigt kan
+man inte ta bort vänner.
+
+
+
+Säkerhet:
+Vi hanterar vem och hur någon kan få tillgång till vår backend och databas med
+hjälp av Cors samt processar all indata som användare kan göra genom mongoDB:s
+sanitize samt operatorer som kollar korrekt indata.
