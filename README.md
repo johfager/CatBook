@@ -3,7 +3,6 @@ within the project can be seen in the following URL, https://youtu.be/sWqul0PI9D
 
 In order to test locally:
   1. Pull the repository.
-
 For Backend:
   2. Using a terminal, write "npm install" in "Project/backend".
   3. Within the same directory, write "node app.js"
