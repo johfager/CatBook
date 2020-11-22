@@ -3,10 +3,10 @@ within the project can be seen in the following URL, https://youtu.be/sWqul0PI9D
 
 In order to test locally:
   1. Pull the repository.
-For Backend:
+  <br/> For Backend:
   2. Using a terminal, write "npm install" in "Project/backend".
   3. Within the same directory, write "node app.js"
-For Frontend:
+  <br/>For Frontend:
   4. Open a new terminal, go to "Project/frontend" and write "npm install"
   5. Within the same directory, write "npm start"
 
